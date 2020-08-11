@@ -1,0 +1,56 @@
+{% extends "ParcelStatusApp/base.html" %}
+{% load static %}
+{% block title %} 
+Home Page 
+{% endblock %}
+
+{% block content %}
+<div class="container">
+<span class="mt-5" style="display: flex;color:#908282;justify-content: center;
+    align-items: center;">TRACK PARCEL</span>
+<hr>
+    <form method="POST">
+       {% csrf_token %}
+        <input type="text" class="todo-input" Name="searchParcel" id="searchParcel" placeholder="ORD-01000-N7F0G2">
+        <button class="todo-button" type="submit" id="submit">
+            <i class="fa fa-search-plus"></i>
+        </button>
+    </form>
+    <hr>
+    {% if status != "" %}
+    <div class="card align-items-center" style="width:300px;left:35%">
+        <div class="card-body"> 
+        <table class="table table-striped">
+         <tbody>
+        <tr><td> Order Detail :</td></tr>
+        <tr><td>{{order}}</td></tr>
+        <tr><td>{{status}}</td></tr>
+        <tr><td> {{status_reason}}</td></tr>
+         </tbody>
+        </table>         
+        </div>
+    </div>
+    {% endif %}
+    <div  id="spinner" style=" left: 45%;display:None;
+    position: absolute;
+    top: 25%;">
+            <div class="d-flex justify-content-center" >
+            <div class="spinner-border text-danger" role="status" style="width: 5rem; height: 5rem;">
+            <span class="sr-only">Loading...</span>
+            </div>
+            </div>
+    </div>
+</div>
+{% endblock %}
+{% block CSS_Link %}
+ <link rel="stylesheet" href="{% static 'ParcelStatusApp/homepage.css' %}">
+{% endblock %}
+
+{% block JS %}
+<script>
+$("#submit").on("click",function() {
+  $("#spinner").show();
+}); 
+</script>
+{% endblock %}
+   
