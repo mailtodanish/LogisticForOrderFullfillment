@@ -1,0 +1,66 @@
+{% extends "LogisticForOrder/base.html" %}
+{% load static %}
+{% block title %} 
+Home Page 
+{% endblock %}
+
+{% block content %}
+<div class="container">
+<span class="mt-5" style="display: flex;color:#908282;justify-content: center;
+    align-items: center;">Courier</span>
+<hr>
+    <form method="POST">
+        {% csrf_token %}        
+        <div class="form-group">
+            {{ form.name.label_tag }}
+            {{ form.name| safe}}
+            {{ form.name.errors }}
+        </div>
+        <div>
+            <input type="submit" value=" Add ">
+        </div>
+        
+    </form>
+    <hr>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Destinations</th>
+            <th scope="col">created</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for d in records %}
+          <tr>
+            <th scope="row"> {{ forloop.counter }}</th>
+            <td>{{d.name}}</td>
+            <td>{{d.created_on}}</td>
+            
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    <div  id="spinner" style=" left: 45%;display:None;
+    position: absolute;
+    top: 25%;">
+            <div class="d-flex justify-content-center" >
+            <div class="spinner-border text-danger" role="status" style="width: 5rem; height: 5rem;">
+            <span class="sr-only">Loading...</span>
+            </div>
+            </div>
+    </div>
+</div>
+{% endblock %}
+{% block CSS_Link %}
+ <link rel="stylesheet" href="{% static 'LogisticForOrder/add_rate_card.css' %}">
+{% endblock %}
+
+{% block JS %}
+<script>
+$("#submit").on("click",function() {
+  $("#spinner").show();
+}); 
+</script>
+{% endblock %}
+   

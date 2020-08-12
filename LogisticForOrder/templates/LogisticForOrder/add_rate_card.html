@@ -1,0 +1,65 @@
+{% extends "LogisticForOrder/base.html" %}
+{% load static %}
+{% block title %} 
+Home Page 
+{% endblock %}
+
+{% block content %}
+<div class="container">
+<span class="mt-5" style="display: flex;color:#908282;justify-content: center;
+    align-items: center;">Courier and Freight Rates</span>
+<hr>
+    <form method="POST">
+        {% csrf_token %}        
+        <div class="form-group">
+        {{ form.courier.label_tag }}
+        {{ form.courier }}
+        {{ form.courier.errors }}
+        </div>
+        <div class="form-group">
+        {{ form.from_destination.label_tag }}
+        {{ form.from_destination| safe}}
+        {{ form.from_destination.errors }}
+        </div>
+        <div class="form-group">
+        {{ form.to.label_tag }}
+        {{ form.to }}
+        {{ form.to.errors }}
+        </div>
+        <div class="form-group">
+        {{ form.min_two_kg_rate.label_tag }}
+        {{ form.min_two_kg_rate }}
+        {{ form.min_two_kg_rate.errors }}
+        </div>
+        <div class="form-group">
+        {{ form.per_kilo_thereafter.label_tag }}
+        {{ form.per_kilo_thereafter }}
+        {{ form.per_kilo_thereafter.errors }}
+        </div>
+        <input type="submit" value=" Add ">
+    </form>
+    <hr>
+    
+    <div  id="spinner" style=" left: 45%;display:None;
+    position: absolute;
+    top: 25%;">
+            <div class="d-flex justify-content-center" >
+            <div class="spinner-border text-danger" role="status" style="width: 5rem; height: 5rem;">
+            <span class="sr-only">Loading...</span>
+            </div>
+            </div>
+    </div>
+</div>
+{% endblock %}
+{% block CSS_Link %}
+ <link rel="stylesheet" href="{% static 'LogisticForOrder/add_rate_card.css' %}">
+{% endblock %}
+
+{% block JS %}
+<script>
+$("#submit").on("click",function() {
+  $("#spinner").show();
+}); 
+</script>
+{% endblock %}
+   

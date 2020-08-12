@@ -12,6 +12,7 @@ class CourierAgency(models.Model):
     class Meta:
         ordering = ['created_on']
         db_table = "courier_agenecy"
+        verbose_name_plural = "courier Agenecies"
 
     def __unicode__(self):
         return self.slug
@@ -21,8 +22,8 @@ class CourierAgency(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
-        super(Post, self).save(*args, **kwargs)
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
 
 class Destination(models.Model):
@@ -44,14 +45,16 @@ class Destination(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
-        super(Post, self).save(*args, **kwargs)
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
 
 class Rate(models.Model):
     courier = models.ForeignKey(CourierAgency, on_delete=models.CASCADE)
-    from = models.ForeignKey(Destination, on_delete=models.CASCADE)
-    to = models.ForeignKey(Destination, on_delete=models.CASCADE)
+    from_destination = models.ForeignKey(
+        Destination, on_delete=models.CASCADE, related_name="From")
+    to = models.ForeignKey(
+        Destination, on_delete=models.CASCADE, related_name="To")
     min_two_kg_rate = models.DecimalField(max_digits=5,
                                           decimal_places=2)
     per_kilo_thereafter = models.DecimalField(max_digits=5,

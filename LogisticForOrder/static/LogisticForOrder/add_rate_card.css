@@ -1,0 +1,109 @@
+* {
+ 
+    margin: 0em;
+    padding: 0em;
+    box-sizing: border-box;
+    
+    }
+    body {
+        background-image: linear-gradient(120deg,#e6e4e4,#e8e8c5);
+        color: white;
+        font-family: 'poppins' sans-serif;
+        min-height:100vh;
+    
+    }
+    
+    header{
+        font-size: 1.5rem;
+    }
+    header,
+    form{
+        min-height: 20vh;
+        /* display: flex; */
+        justify-content: center;
+        align-items: center;
+    }
+    
+    /* form input, 
+    form button {
+        padding: 0.5rem;
+        font-size: 2rem;
+        border: none;
+        background: white;
+    } */
+    
+    form button {
+        color: #dc3545;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border:none;
+    }
+    
+    form button:hover{
+        color:white;
+        background: #dc3545;
+        border: none;
+    }
+    
+    .todo-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .todo-list{
+        min-width: 40%;
+        list-style: none;
+    }
+    .todo {
+      background: white;
+      display: flex;
+       justify-content:space-between;
+      align-items: center;
+      margin: 0.5rem;
+      color:black;
+      font-size: 1.5rem;
+    }
+    
+    .todo li{
+        /* send both button together*/
+        flex: 1;
+    }
+    
+    .btn-completed, .btn-trash {
+        background: #ec8e8e;
+        font-size: 1rem;
+        border: none;
+        padding: 1rem;
+        cursor: pointer;
+        color: white;
+    }
+    .btn-completed{
+        background: rgb(140, 223, 140);
+    }
+    
+    .btn-completed:hover{
+        background: white;
+        font-size: 1rem;
+        border: none;
+        padding: 1rem;
+        cursor: pointer;
+        color: rgb(140, 223, 140);
+    }
+    .todo-item{
+        padding: 0rem 0.5rem;
+    }
+    
+    
+    .ui-helper-hidden-accessible { display:none; }
+    
+    ul {
+        list-style-type: none;
+    }
+    
+    label {
+        padding: 12px 12px 12px 0;
+        display: inline-block;
+        color:#908282;
+    }

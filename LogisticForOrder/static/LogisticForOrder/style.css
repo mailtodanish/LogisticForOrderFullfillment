@@ -1,0 +1,22 @@
+* {
+ 
+margin: 0em;
+padding: 0em;
+box-sizing: border-box;
+
+}
+body {
+    background-image: linear-gradient(120deg,#ffffff,#f905270d);
+    color: black;
+    font-family: 'poppins' sans-serif;
+    min-height:100vh;
+}
+
+header{
+    font-size: 1.5rem;
+}
+
+.errorlist
+{
+    color:red;
+}
