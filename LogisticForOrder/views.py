@@ -20,6 +20,11 @@ class CreateRateCard(FormView):
         notes.save()
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['records'] = Rate.objects.all().order_by('courier')
+        return context
+
 
 class CreateCourier(FormView):
     '''

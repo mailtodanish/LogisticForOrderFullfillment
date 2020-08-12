@@ -9,6 +9,9 @@ class CourierAgency(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     update_on = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         ordering = ['created_on']
         db_table = "courier_agenecy"
@@ -32,6 +35,9 @@ class Destination(models.Model):
     description = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     update_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         ordering = ['created_on']
@@ -62,10 +68,9 @@ class Rate(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     update_on = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"{self.courier},{self.from_destination},{self.to}"
+
     class Meta:
         ordering = ['created_on']
         db_table = "rate_card"
-
-    def save(self, *args, **kwargs):
-        self.update_on = slugify(self.title)
-        super().save(*args, **kwargs)

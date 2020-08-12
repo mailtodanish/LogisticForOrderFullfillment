@@ -23,9 +23,16 @@
                 <a class="navbar-brand" href="/">
                <img src="{% static 'LogisticForOrder/icon/logo.png' %}">
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="navbar-toggler-icon"></span>
                 </button>
+                
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="{% url 'create-destination' %}">Destination</a>
+                  <a class="dropdown-item" href="{% url 'create-courier' %}">Courier</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'create-rate-card' %}">Rate Card</a>
+                </div>
            
             </nav>
     {% block content %}
