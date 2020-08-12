@@ -12,4 +12,6 @@ urlpatterns = [
          CreateDestination.as_view(), name='create-destination'),
     path('min-kg-for-courier/',
          views.min_kg_for_courier_ajax, name='min-kg-for-courier'),  # AJax
+    path('courier-quote/',
+         views.calculateQuotationForCourier, name='courier-quote'),  # AJax
 ]

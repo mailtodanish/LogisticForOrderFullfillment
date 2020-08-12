@@ -5,6 +5,7 @@ from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 class CreateRateCard(FormView):
     '''
@@ -90,13 +91,45 @@ def calculateQuotationForCourier(request):
         from_destination = request.POST.get('from_destination')
         to_destination = request.POST.get('to_destination')
         weight = request.POST.get('weight')
-        courier = CourierAgency.objects.all()
         From = Destination.objects.filter(name=from_destination)
+        if not From.exists():
+            data = {'Error': 'From Destination not found'}
+            return JsonResponse(data)
         to = Destination.objects.filter(name=to_destination)
-        rates = Rate.objects.filter(from_destination=From and to=to)
+        if not to.exists():
+            data = {'Error': 'To Destination not found'}
+            return JsonResponse(data)
+        print(From, to)
+        rates = Rate.objects.filter(from_destination__name__startswith=from_destination,
+        to__name__startswith=to_destination)
         if rates.exists():
-        data = {'min_kg': courier.min_kg}
-        return JsonResponse(data)
+            ls = []
+            for r in rates:
+                obj = {}
+                courier = r.courier
+                obj["courier"] = courier.name
+                obj["weight"] = weight 
+                obj["From"] = r.from_destination.name   
+                obj["To"] = r.to.name               
+                min_kg = r.courier.min_kg
+                obj["min_kg"] = min_kg
+                min_kg_rate = r.min_kg_rate
+                obj["min_kg_rate"] = min_kg_rate
+                per_kilo_thereafter = r.per_kilo_thereafter
+                obj["per_kilo_thereafter"] = str(per_kilo_thereafter)              
+                if int(weight) > min_kg:
+                    # calculate
+                    obj["totalprice"] = min_kg_rate + (int(weight) - min_kg) * int(per_kilo_thereafter)
+                else:
+                    obj["totalprice"] = min_kg_rate
+                ls.append(obj)
+            print(ls)
+            data = {'data': ls}
+            return JsonResponse(data)
+        else:
+            data = {'data': ''}
+            return JsonResponse(data)
+
     else:
-        data = {'min_kg': ''}
+        data = {'data': ''}
         return JsonResponse(data)
