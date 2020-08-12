@@ -8,6 +8,7 @@ class CourierAgency(models.Model):
     description = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     update_on = models.DateTimeField(auto_now_add=True)
+    min_kg = models.DecimalField(max_digits=5, decimal_places=2, default=0)
 
     def __str__(self):
         return self.name
@@ -61,8 +62,7 @@ class Rate(models.Model):
         Destination, on_delete=models.CASCADE, related_name="From")
     to = models.ForeignKey(
         Destination, on_delete=models.CASCADE, related_name="To")
-    min_two_kg_rate = models.DecimalField(max_digits=5,
-                                          decimal_places=2)
+    min_kg_rate = models.DecimalField(max_digits=5, decimal_places=2)
     per_kilo_thereafter = models.DecimalField(max_digits=5,
                                               decimal_places=2)
     created_on = models.DateTimeField(auto_now_add=True)

@@ -19,7 +19,7 @@ class CourierCreateForm(forms.ModelForm):
 
     class Meta:
         model = CourierAgency
-        fields = ['name', ]
+        fields = ['name', 'min_kg', ]
 
 
 class DestinationCreateForm(forms.ModelForm):

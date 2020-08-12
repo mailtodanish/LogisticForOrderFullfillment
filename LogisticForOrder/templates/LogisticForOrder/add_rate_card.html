@@ -25,9 +25,9 @@ Home Page
         
         <div class="form-group">
         
-        {{ form.min_two_kg_rate.label_tag }}
-        {{ form.min_two_kg_rate }}
-        {{ form.min_two_kg_rate.errors }}
+        {{ form.min_kg_rate.label_tag }}
+        {{ form.min_kg_rate }}
+        {{ form.min_kg_rate.errors }}
         {{ form.per_kilo_thereafter.label_tag }}
         {{ form.per_kilo_thereafter }}
         {{ form.per_kilo_thereafter.errors }}
@@ -39,10 +39,11 @@ Home Page
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">courier</th>
+            <th scope="col">Courier</th>
             <th scope="col">From</th>
             <th scope="col">To</th>
-            <th scope="col">Min - 2kg</th>
+            <th scope="col">Min - Kg</th>
+            <th scope="col">Min kg Rate</th>
             <th scope="col">Per Kilo thereafter</th>
           </tr>
         </thead>
@@ -53,6 +54,7 @@ Home Page
             <td>{{d.courier}}</td>
             <td>{{d.from_destination}}</td>
             <td>{{d.to}}</td>
+            <td>{{d.courier.min_kg}}</td>
             <td>R {{d.min_two_kg_rate}}</td>
             <td>R {{d.per_kilo_thereafter}}</td>
           </tr>
@@ -79,6 +81,23 @@ Home Page
 $("#submit").on("click",function() {
   $("#spinner").show();
 }); 
+$("#id_courier").change(function () {
+      pk= $(this).val();
+      $.ajax({
+        url: "{% url 'min-kg-for-courier' %}",
+        method:"POST",
+        data: {
+          'pk': pk
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.min_kg) {
+            $('label[for="id_min_kg_rate"]').text(`Min ${data["min_kg"]} kg rate`);
+            console.log(`Min ${data["min_kg"]} kg rate`);
+          }
+        }
+      });
+    });
 </script>
 {% endblock %}
    

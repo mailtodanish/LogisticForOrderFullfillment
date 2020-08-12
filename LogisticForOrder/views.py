@@ -3,7 +3,8 @@ from .form import RateCardCreateForm, CourierCreateForm, DestinationCreateForm
 from .models import Rate, CourierAgency, Destination
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
-
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 class CreateRateCard(FormView):
     '''
@@ -22,7 +23,7 @@ class CreateRateCard(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['records'] = Rate.objects.all().order_by('courier')
+        context['records'] = Rate.objects.all().order_by('courier', 'from_destination')
         return context
 
 
@@ -66,3 +67,36 @@ class CreateDestination(FormView):
         context = super().get_context_data(**kwargs)
         context['records'] = Destination.objects.all().order_by('name')
         return context
+
+
+@csrf_exempt
+def min_kg_for_courier_ajax(request):
+    '''
+    Returns Minimum KG for Courier
+    '''
+    if request.method == 'POST':
+        pk = request.POST.get('pk')
+        courier = CourierAgency.objects.get(pk=pk)
+        data = {'min_kg': courier.min_kg}
+        return JsonResponse(data)
+    else:
+        data = {'min_kg': ''}
+        return JsonResponse(data)
+
+
+@csrf_exempt
+def calculateQuotationForCourier(request):
+    if request.method == 'POST':
+        from_destination = request.POST.get('from_destination')
+        to_destination = request.POST.get('to_destination')
+        weight = request.POST.get('weight')
+        courier = CourierAgency.objects.all()
+        From = Destination.objects.filter(name=from_destination)
+        to = Destination.objects.filter(name=to_destination)
+        rates = Rate.objects.filter(from_destination=From and to=to)
+        if rates.exists():
+        data = {'min_kg': courier.min_kg}
+        return JsonResponse(data)
+    else:
+        data = {'min_kg': ''}
+        return JsonResponse(data)
